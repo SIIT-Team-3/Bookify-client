@@ -18,6 +18,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
     ReactiveFormsModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    SharedModule
   ],
   exports:[
     AccommodationBasicInformationComponent,
