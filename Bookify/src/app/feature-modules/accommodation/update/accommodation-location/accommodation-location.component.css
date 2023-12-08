@@ -4,7 +4,7 @@ mat-form-field {
 }
 
 mat-label {
-    float: inline-start;
+    float: left;
     width: 14vw;
 }
 
@@ -20,9 +20,7 @@ mat-label {
 }
 
 .right {
-    width: 45%;
-    margin-left: 10%;
-    background-image: url('../../../../../assets/images/map.webp');
-    background-size: cover;
-    height: 320px;
+  margin-top: 3vh;
+  margin-left: 5vw;
+  width: 45%;
 }
