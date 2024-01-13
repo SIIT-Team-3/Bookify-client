@@ -62,32 +62,36 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      const address: Address = {
-        country: this.form.get('country')?.value,
-        city: this.form.get('city')?.value,
-        address: this.form.get('streetAddress')?.value,
-        zipCode: this.form.get('zipCode')?.value
-      }
-      const user: UserRegistrationDTO = {
-        email: this.form.get('email')?.value,
-        password: this.form.get('password')?.value,
-        confirmPassword: this.form.get('confirmPassword')?.value,
-        firstName: this.form.get('firstName')?.value,
-        lastName: this.form.get('lastName')?.value,
-        address: address,
-        phone: this.form.get('phone')?.value,
-        role: this.form.get('role')?.value
-      }
-      this.authenticationService.register(user).subscribe({
-        next: (hashToken: Message) => {
-          this.openSnackBar("Check mail for activating accoun", "close");
-          this.router.navigate(['/login']);
-        },
-        error: (_) => {
-          this.openSnackBar("Already have account with this email", "close");
-        }
-      })
+      this.register();
     }
     this.submitted = true;
+  }
+
+  register() {
+    const address: Address = {
+      country: this.form.get('country')?.value,
+      city: this.form.get('city')?.value,
+      address: this.form.get('streetAddress')?.value,
+      zipCode: this.form.get('zipCode')?.value
+    };
+    const user: UserRegistrationDTO = {
+      email: this.form.get('email')?.value,
+      password: this.form.get('password')?.value,
+      confirmPassword: this.form.get('confirmPassword')?.value,
+      firstName: this.form.get('firstName')?.value,
+      lastName: this.form.get('lastName')?.value,
+      address: address,
+      phone: this.form.get('phone')?.value,
+      role: this.form.get('role')?.value
+    };
+    this.authenticationService.register(user).subscribe({
+      next: (hashToken: Message) => {
+        this.openSnackBar("Check mail for activating accoun", "close");
+        this.router.navigate(['/login']);
+      },
+      error: (_) => {
+        this.openSnackBar("Already have account with this email", "close");
+      }
+    });
   }
 }
