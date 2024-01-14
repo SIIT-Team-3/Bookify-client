@@ -42,8 +42,7 @@ export class DatapickerRangeComponent {
     return new NgbDate(Number(dateStruct[2]), Number(dateStruct[1]), Number(dateStruct[0]));
   }
 
-
-  constructor(private datePipe: DatePipe) {}
+  constructor() {}
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {

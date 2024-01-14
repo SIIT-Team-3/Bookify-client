@@ -1,9 +1,6 @@
 import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {DatapickerRangeComponent} from "../../../layout/datapicker-range/datapicker-range.component";
-import {MessageDialogComponent} from "../../../layout/message-dialog/message-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
-import {ReservationDialogComponent} from "../../../layout/reservation-dialog/reservation-dialog.component";
-import {AccommodationService} from "../accommodation.service";
 
 @Component({
   selector: 'app-reserve',
