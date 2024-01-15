@@ -52,7 +52,7 @@ describe('AccommodationService', () => {
 
   it('should create a reservation request', () => {
     const reservation: ReservationRequestDTO = {
-      created: new Date(),
+      created: new Date('2024-02-01'),
       start: new Date('2024-03-01'),
       end: new Date('2024-03-04'),
       guestNumber: 2,
