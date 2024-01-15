@@ -68,7 +68,6 @@ export class AccommodationPageComponent implements OnInit{
     const reserve = document.getElementById("reserve-comp");
     const favorite = document.getElementById("favorite-button");
     if (reserve != null && favorite != null) {
-      console.log(this.authenticationService.getRole());
       if (this.authenticationService.getRole() == "GUEST") {
         reserve.style.display = 'block';
         favorite.style.visibility = 'visible';
@@ -165,24 +164,28 @@ export class AccommodationPageComponent implements OnInit{
         if (data == -1 || begin < new Date())
           this.dialog.open(MessageDialogComponent, {data: {message:"Accommodation it not available for this parameters."}});
         else {
-          this.dialog.open(ReservationDialogComponent, {data: {message: "Total cost for this reservation is " + Math.round(data * 100) / 100 + " EUR."}}).afterClosed().subscribe((result) => {
-            if (result) {
-              let reservation: ReservationRequestDTO = {
-                created: new Date(),
-                start: begin,
-                end: end,
-                guestNumber: persons,
-                price: Math.round(data * 100) / 100
-              };
-              this.accommodationService.createReservationRequest(reservation, id, this.authenticationService.getUserId()).subscribe({
-                next: (data): void => {
-                }
-              })
-            }
-          })
+          this.openReservationDialog(id, begin, end, persons, data);
         }
       }
     });
+  }
+
+  openReservationDialog(id: number, begin: Date, end: Date, persons: number, data: number): void {
+    this.dialog.open(ReservationDialogComponent, {data: {message: "Total cost for this reservation is " + Math.round(data * 100) / 100 + " EUR."}}).afterClosed().subscribe((result) => {
+      if (result) {
+        let reservation: ReservationRequestDTO = {
+          created: new Date(),
+          start: begin,
+          end: end,
+          guestNumber: persons,
+          price: Math.round(data * 100) / 100
+        };
+        this.accommodationService.createReservationRequest(reservation, id, this.authenticationService.getUserId()).subscribe({
+          next: (data): void => {
+          }
+        })
+      }
+    })
   }
 
   addToFavorites() {

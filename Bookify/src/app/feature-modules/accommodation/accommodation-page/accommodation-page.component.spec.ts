@@ -15,6 +15,7 @@ import {ReserveComponent} from "../reserve/reserve.component";
 import {DatapickerRangeComponent} from "../../../layout/datapicker-range/datapicker-range.component";
 import {FormsModule} from "@angular/forms";
 import {MessageDialogComponent} from "../../../layout/message-dialog/message-dialog.component";
+import {ReservationDialogComponent} from "../../../layout/reservation-dialog/reservation-dialog.component";
 
 describe('AccommodationPageComponent', () => {
   let component: AccommodationPageComponent;
@@ -62,5 +63,18 @@ describe('AccommodationPageComponent', () => {
     );
 
     expect(accommodationServiceSpy.createReservationRequest).not.toHaveBeenCalled();
+  }));
+
+  it('should call openReservationDialog if accommodation is available', fakeAsync(() => {
+    const mockData = 100.0;
+    accommodationServiceSpy.getTotalPrice.and.returnValue(of(mockData));
+
+    const openReservationDialogSpy = spyOn(component, 'openReservationDialog');
+
+    component.openDialog(1, new Date('2024-03-06'), new Date('2024-03-08'), 2, "ROOM");
+
+    tick();
+
+    expect(openReservationDialogSpy).toHaveBeenCalledWith(1, new Date('2024-03-06'), new Date('2024-03-08'), 2, mockData);
   }));
 });
