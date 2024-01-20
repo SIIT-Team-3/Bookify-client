@@ -32,7 +32,8 @@ import { NotificationCardComponent } from './notification-card/notification-card
     ReviewModule
   ],
   exports: [
-    AccountComponent
+    AccountComponent,
+    UserInformationComponent
   ]
 })
 export class AccountModule {
