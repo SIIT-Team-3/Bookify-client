@@ -93,9 +93,9 @@
       </div>
     </form>
     <div class="button-holder-horizontal">
-      <button mat-button (click)="OnEditClick()" [ngClass]="{disabled: !isDisabled}" [disabled]="!isDisabled">EDIT ACCOUNT</button>
-      <button mat-button (click)="OnSaveClick()" [ngClass]="{disabled: isDisabled}" [disabled]="isDisabled">SAVE CHANGES</button>
-      <button mat-button (click)="OnCancelClick()" [ngClass]="{disabled: isDisabled}" [disabled]="isDisabled">CANCEL</button>
+      <button id="edit-button" mat-button (click)="OnEditClick()" [ngClass]="{disabled: !isDisabled}" [disabled]="!isDisabled">EDIT ACCOUNT</button>
+      <button id="save-button" mat-button (click)="OnSaveClick()" [ngClass]="{disabled: isDisabled}" [disabled]="isDisabled">SAVE CHANGES</button>
+      <button id="cancel-button" mat-button (click)="OnCancelClick()" [ngClass]="{disabled: isDisabled}" [disabled]="isDisabled">CANCEL</button>
     </div>
   </div>
 </div>
