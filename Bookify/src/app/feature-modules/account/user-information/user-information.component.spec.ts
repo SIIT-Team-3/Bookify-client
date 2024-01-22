@@ -8,8 +8,10 @@ import {AccountService} from "../account.service";
 import {AuthenticationService} from "../../authentication/authentication.service";
 import {of} from "rxjs";
 import {account1, account2, account3} from "../mocks/accounts.mock";
-import {RouterModule} from "@angular/router";
+import {Router, RouterModule} from "@angular/router";
 import {HttpClientModule} from "@angular/common/http";
+import {MessageDialogComponent} from "../../../layout/message-dialog/message-dialog.component";
+import {MatDialogRef} from "@angular/material/dialog";
 
 describe('UserInformationComponent', () => {
   let component: UserInformationComponent;
@@ -65,7 +67,7 @@ describe('UserInformationComponent', () => {
 
   });
 
-  it('all fields should be disabled at first, cancel and save buttons should not be disabled', () => {
+  it('all fields should be disabled at first, cancel and save buttons should be disabled', () => {
     const editButton = fixture.debugElement.query(By.css('#edit-button')).nativeElement;
     const saveButton = fixture.debugElement.query(By.css('#save-button')).nativeElement;
     const cancelButton = fixture.debugElement.query(By.css('#cancel-button')).nativeElement;
@@ -133,7 +135,10 @@ describe('UserInformationComponent', () => {
     expect(component.userInfoForm.controls['country'].value).toEqual('Serbia');
   });
 
-  it('valid fields input, update user should be called and fields updated', () => {
+  it('valid fields input, update user should be called and fields updated and dialog opened', () => {
+    spyOn(component.dialog, 'open')
+      .and
+      .returnValue({afterClosed: () => of(true)} as MatDialogRef<any>);
     fixture.debugElement.query(By.css("#edit-button")).triggerEventHandler("click", null);
     fixture.detectChanges();
     const saveButton = fixture.debugElement.query(By.css('#save-button')).nativeElement;
@@ -148,6 +153,7 @@ describe('UserInformationComponent', () => {
     component.userInfoForm.controls['country'].setValue(account3.address?.country);
     expect(component.userInfoForm.valid).toBeTruthy();
     fixture.debugElement.query(By.css("#save-button")).triggerEventHandler("click", null);
+    expect(component.dialog.open).toHaveBeenCalledWith(MessageDialogComponent, {data: {message: 'User information changed successfully!'}});
     fixture.detectChanges();
     expect(accountServiceSpy.updateUser).toHaveBeenCalledTimes(1);
     expect(component.account).toEqual(account3);
