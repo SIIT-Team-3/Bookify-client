@@ -98,6 +98,9 @@ describe('UserInformationComponent', () => {
   });
 
   it('invalid fields input, update user should not be called', () => {
+    spyOn(component.dialog, 'open')
+      .and
+      .returnValue({afterClosed: () => of(true)} as MatDialogRef<any>);
     fixture.debugElement.query(By.css("#edit-button")).triggerEventHandler("click", null);
     fixture.detectChanges();
     component.userInfoForm.controls['firstname'].setValue('');
@@ -110,9 +113,13 @@ describe('UserInformationComponent', () => {
     expect(component.userInfoForm.valid).toBeFalsy();
     fixture.debugElement.query(By.css("#save-button")).triggerEventHandler("click", null);
     expect(accountServiceSpy.updateUser).toHaveBeenCalledTimes(0);
+    expect(component.dialog.open).toHaveBeenCalledTimes(0);
   });
 
   it('valid fields input, cancel should be called and fields rollback', () => {
+    spyOn(component.dialog, 'open')
+      .and
+      .returnValue({afterClosed: () => of(true)} as MatDialogRef<any>);
     fixture.debugElement.query(By.css("#edit-button")).triggerEventHandler("click", null);
     fixture.detectChanges();
     component.userInfoForm.controls['firstname'].setValue(account3.firstName);
@@ -125,6 +132,7 @@ describe('UserInformationComponent', () => {
     expect(component.userInfoForm.valid).toBeTruthy();
     fixture.debugElement.query(By.css("#cancel-button")).triggerEventHandler("click", null);
     expect(accountServiceSpy.updateUser).toHaveBeenCalledTimes(0);
+    expect(component.dialog.open).toHaveBeenCalledTimes(0);
     expect(component.account).toEqual(account1);
     expect(component.userInfoForm.controls['firstname'].value).toEqual('Pera');
     expect(component.userInfoForm.controls['lastname'].value).toEqual('Peric');
